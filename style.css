@@ -1,0 +1,43 @@
+body {
+    height: 100vh;
+    font-family: 'Bruno Ace SC', cursive;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 18px;
+    margin: 0px;
+}
+
+#logo {
+    flex: 1;
+    font-size: 32px;
+    font-weight: 900;
+}
+
+.container {
+    flex: 1;
+    margin: 16px;
+}
+
+.keypad {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+.keypad button {
+    flex: 1;
+    border-radius: 8px;
+    font-size: 30px;
+    min-width: 60px;
+    min-height: 100px;
+    margin: 3px;
+}
+
+#clear {
+    flex: 2.4;
+}
+
+footer {
+    font-size: 14px;
+}
