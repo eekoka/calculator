@@ -6,38 +6,77 @@ body {
     text-align: center;
     font-size: 18px;
     margin: 0px;
+    min-width: 200px;
+    background-color: #eee2dc;
+}
+
+header {
+    display: flex;
+    background-color: #ac3b61;
+    color: whitesmoke;
+    padding: 6px;
 }
 
 #logo {
     flex: 1;
-    font-size: 32px;
+    font-size: 16px;
     font-weight: 900;
 }
 
-.container {
+.display {
+    font-family: 'Poppins', sans-serif;
     flex: 1;
-    margin: 16px;
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+    overflow-wrap: break-word;
+}
+
+#sub-display-1 {
+    flex: 1;
+    font-size: 60px;
+    margin: 0px;
+}
+
+#sub-display-2 {
+    flex: 1;
+    font-size: 60px;
+    margin: 0px;
+    font-weight: 800;
 }
 
 .keypad {
+    flex: 3;
     display: flex;
-    flex-wrap: wrap;
-    gap: 3px;
+    flex-direction: column;
+    padding: 3px;
 }
 
-.keypad button {
+.keypad-row {
+    flex: 1;
+    display: flex;
+}
+
+.keypad-row button {
     flex: 1;
     border-radius: 8px;
-    font-size: 30px;
-    min-width: 60px;
-    min-height: 100px;
+    font-size: 24px;
     margin: 3px;
+    border: none;
+    box-shadow: 0 3px #999;
 }
 
-#clear {
-    flex: 2.4;
+.keypad-row button:hover {background-color: #edc7b7}
+
+.keypad-row button:active {
+  background-color: #edc7b7;
+  box-shadow: 0 1px #666;
+  transform: translateY(3px);
 }
 
 footer {
     font-size: 14px;
+    background-color: #ac3b61;
+    color: whitesmoke;
 }
+
