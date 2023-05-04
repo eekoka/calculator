@@ -66,10 +66,18 @@ header {
     box-shadow: 0 3px #999;
 }
 
-.keypad-row button:hover {background-color: #edc7b7}
+.lower-btns {
+    background-color: #edc7b7;
+}
+
+.operator {
+    background-color: #ddcbd1;
+}
+
+.keypad-row button:hover {background-color: #bab2b5}
 
 .keypad-row button:active {
-  background-color: #edc7b7;
+  background-color: #bab2b5;
   box-shadow: 0 1px #666;
   transform: translateY(3px);
 }
