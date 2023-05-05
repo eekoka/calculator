@@ -76,12 +76,14 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
             else if (rightSide === undefined && value === ".") rightSide = "0"+value;//if first value is . add 0 in front
             else rightSide += value;
         } else if (answer !== undefined) { //clear to start new calculate if user punch a number after getting answer
-            leftSide = undefined;
+            leftSide = value;
             rightSide = undefined;
+            leftSign = "";
+            rightSign = "";
             operator = undefined;
             upperScreenText = undefined;
             answer = undefined;
-            upperDisplay.textContent = "0";
+            //upperDisplay.textContent = "0";
             lowerDisplay.textContent = "";
         };
     } else if (value === "+/-" && answer === undefined) {
@@ -126,6 +128,8 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
     } else if (value === "Clear")  {
         leftSide = undefined;
         rightSide = undefined;
+        leftSign = "";
+        rightSign = "";
         operator = undefined;
         upperScreenText = undefined;
         answer = undefined;
@@ -139,4 +143,3 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
     if (upperScreenText !== undefined) upperDisplay.textContent = upperScreenText;
     if (answer !== undefined) lowerDisplay.textContent = displayAnswer(answer); //max is 10 decimal place
 }));
-
