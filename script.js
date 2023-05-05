@@ -13,6 +13,7 @@ function divide (x,y) {
     return x/y;
 }
 function modulo (x,y) {
+    if (y === 0) return "Can't Divide by 0, Dude!";
     return x%y;
 }
 
@@ -82,8 +83,28 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
         else if (operator === undefined && leftSide !== undefined && leftSign === "-") leftSign = "";
     } else if (value === "+" || value === "-" || value === "x" || value === "÷" || value === "%") {
         if (rightSide === undefined && leftSide !== undefined) operator = value;
+        //allow to enter multiple operations before hitting equals button
+        //allow to continue calculations after first answer
+        else if (answer === undefined && rightSide !== undefined) {
+            let x = parseFloat(leftSign+leftSide);
+            let y = parseFloat(rightSign+rightSide);
+            if (!isNaN(operate(x, y, operator))){
+                leftSide = operate(x, y, operator);
+                rightSide = undefined;
+                operator = value;
+            } else {
+                answer = operate(x, y, operator);
+            };
+        }
+        else if (answer !== undefined && !isNaN(answer)) {
+            leftSide = answer;
+            operator = value;
+            rightSide = undefined;
+            answer = undefined;
+            lowerDisplay.textContent = "";
+        };
     } else if (value === "=")  {
-        if (leftSide !== undefined && rightSide !== undefined || operator !== undefined) {
+        if (leftSide !== undefined && rightSide !== undefined && operator !== undefined) {
             let x = parseFloat(leftSign+leftSide);
             let y = parseFloat(rightSign+rightSide);
             answer = operate(x, y, operator);
