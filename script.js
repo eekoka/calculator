@@ -76,7 +76,8 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
             else if (rightSide === undefined && value === ".") rightSide = "0"+value;//if first value is . add 0 in front
             else rightSide += value;
         } else if (answer !== undefined) { //clear to start new calculate if user punch a number after getting answer
-            leftSide = value;
+            if (value === ".") leftSide = "0"+value;
+            else leftSide = value;
             rightSide = undefined;
             leftSign = "";
             rightSign = "";
