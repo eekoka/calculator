@@ -9,6 +9,7 @@ function multiply (x,y) {
     return x*y;
 }
 function divide (x,y) {
+    if (y === 0) return "Can't Divide by 0, Dude!";
     return x/y;
 }
 function modulo (x,y) {
@@ -26,11 +27,17 @@ function operate (x, y, operator) {
     return result;
 }
 
+//get value clicked on screen by user
 function getValue(idValue) {
     const btn = document.querySelector("#"+idValue);
     return btn.textContent;
 }
 
+//display result to dp number of decimal places - default is 10 decimal places
+function displayAnswer (ans, dp=10) {
+    if (isNaN(ans)) return ans;
+    return Number((ans).toFixed(dp));
+ }
 
 
 //get reference to the display
@@ -60,7 +67,7 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
             else if (leftSide !== undefined && leftSide.includes(".") && value === ".");//do nothing with multiple decimals
             else if (leftSide === undefined && value === ".") leftSide = "0"+value;//if first value is . add 0 in front
             else leftSide += value;
-        } else {
+        } else if (answer === undefined) {
             if (rightSide === undefined && value !== ".") rightSide = value;
             else if (rightSide === "0" && value !== ".") rightSide = value;
             else if (rightSide === "0" && value === "0");//do nothing with leading zeros
@@ -68,13 +75,13 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
             else if (rightSide === undefined && value === ".") rightSide = "0"+value;//if first value is . add 0 in front
             else rightSide += value;
         };
-    } else if (value === "+/-") {
+    } else if (value === "+/-" && answer === undefined) {
         if (rightSide !== undefined && rightSign === "" && rightSide !== "0") rightSign = "-";
         else if (rightSide !== undefined && rightSign === "-") rightSign = "";
         else if (operator === undefined && leftSide !== undefined && leftSide !== "0" && leftSign === "") leftSign = "-";
         else if (operator === undefined && leftSide !== undefined && leftSign === "-") leftSign = "";
     } else if (value === "+" || value === "-" || value === "x" || value === "÷" || value === "%") {
-        if (operator === undefined && leftSide !== undefined) operator = value;
+        if (rightSide === undefined && leftSide !== undefined) operator = value;
     } else if (value === "=")  {
         if (leftSide !== undefined && rightSide !== undefined || operator !== undefined) {
             let x = parseFloat(leftSign+leftSide);
@@ -95,7 +102,6 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
     if (operator !== undefined) upperScreenText = leftSign.concat(leftSide).concat(" ", operator);
     if (rightSide !== undefined) upperScreenText = leftSign.concat(leftSide).concat(" ", operator).concat(" ", rightSign, rightSide);
     if (upperScreenText !== undefined) upperDisplay.textContent = upperScreenText;
-    if (answer !== undefined) lowerDisplay.textContent = answer;
+    if (answer !== undefined) lowerDisplay.textContent = displayAnswer(answer); //max is 10 decimal place
 }));
-
 
