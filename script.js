@@ -75,6 +75,14 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
             else if (rightSide !== undefined && rightSide.includes(".") && value === ".");//do nothing with multiple decimals
             else if (rightSide === undefined && value === ".") rightSide = "0"+value;//if first value is . add 0 in front
             else rightSide += value;
+        } else if (answer !== undefined) { //clear to start new calculate if user punch a number after getting answer
+            leftSide = undefined;
+            rightSide = undefined;
+            operator = undefined;
+            upperScreenText = undefined;
+            answer = undefined;
+            upperDisplay.textContent = "0";
+            lowerDisplay.textContent = "";
         };
     } else if (value === "+/-" && answer === undefined) {
         if (rightSide !== undefined && rightSign === "" && rightSide !== "0") rightSign = "-";
@@ -89,7 +97,7 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
             let x = parseFloat(leftSign+leftSide);
             let y = parseFloat(rightSign+rightSide);
             if (!isNaN(operate(x, y, operator))){
-                leftSide = operate(x, y, operator);
+                leftSide = displayAnswer(operate(x, y, operator));
                 rightSide = undefined;
                 operator = value;
             } else {
@@ -97,15 +105,21 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
             };
         }
         else if (answer !== undefined && !isNaN(answer)) {
-            leftSide = answer;
+            leftSide = displayAnswer(answer);
             operator = value;
             rightSide = undefined;
             answer = undefined;
             lowerDisplay.textContent = "";
         };
     } else if (value === "=")  {
-        if (leftSide !== undefined && rightSide !== undefined && operator !== undefined) {
+        if (leftSide !== undefined && rightSide !== undefined && operator !== undefined && answer === undefined) {
             let x = parseFloat(leftSign+leftSide);
+            let y = parseFloat(rightSign+rightSide);
+            answer = operate(x, y, operator);
+        } else if (leftSide !== undefined && rightSide !== undefined && operator !== undefined && !isNaN(answer)) {
+            let x = answer;
+            leftSign = "";
+            leftSide = answer.toString();
             let y = parseFloat(rightSign+rightSide);
             answer = operate(x, y, operator);
         }
