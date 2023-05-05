@@ -102,6 +102,7 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
             if (!isNaN(operate(x, y, operator))){
                 leftSide = displayAnswer(operate(x, y, operator));
                 rightSide = undefined;
+                rightSign = "";
                 operator = value;
             } else {
                 answer = operate(x, y, operator);
@@ -111,6 +112,7 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
             leftSide = displayAnswer(answer);
             operator = value;
             rightSide = undefined;
+            rightSign = "";
             answer = undefined;
             lowerDisplay.textContent = "";
         };
