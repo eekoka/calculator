@@ -9,11 +9,11 @@ function multiply (x,y) {
     return x*y;
 }
 function divide (x,y) {
-    if (y === 0) return "Can't Divide by 0, Dude!";
+    if (y === 0) return "Can't divide by 0, dude!";
     return x/y;
 }
 function modulo (x,y) {
-    if (y === 0) return "Can't Divide by 0, Dude!";
+    if (y === 0) return "Can't divide by 0, dude!";
     return x%y;
 }
 
@@ -47,18 +47,15 @@ const lowerDisplay = document.querySelector("#sub-display-2");
 upperDisplay.textContent = "0";
 //lowerDisplay.textContent = "0";
 
-let leftSide;
-let rightSide;
-let leftSign = "";//default is no sign which positive
-let rightSign = "";//default is no sign which positive
-let operator;
-let upperScreenText;
-let answer;
+function calculate(e) {
 
-//listen for clicks
-const keys = document.querySelectorAll(".keypad-unit");
-keys.forEach(key => key.addEventListener("click",(e)=>{
-    let value = getValue(e.target.id);
+    let value;
+    e.preventDefault(); //this prevent the the enter button to fire by default to enter current value rather than just acting as =
+    if (e.type === "click") value = getValue(e.target.id);
+    else if (e.type === "keydown") value = getKeyboardValue(e.code);
+
+    console.log(value);
+
     //collect values to display on screen
     if (Number.isInteger(parseInt(value)) || value === ".") {
         if (operator === undefined) {
@@ -145,4 +142,36 @@ keys.forEach(key => key.addEventListener("click",(e)=>{
     if (rightSide !== undefined) upperScreenText = leftSign.concat(leftSide).concat(" ", operator).concat(" ", rightSign, rightSide);
     if (upperScreenText !== undefined) upperDisplay.textContent = upperScreenText;
     if (answer !== undefined) lowerDisplay.textContent = displayAnswer(answer); //max is 10 decimal place
-}));
+}
+
+
+let leftSide;
+let rightSide;
+let leftSign = "";//default is no sign which positive
+let rightSign = "";//default is no sign which positive
+let operator;
+let upperScreenText;
+let answer;
+
+//---------listen for clicks-------------
+const keys = document.querySelectorAll(".keypad-unit");
+keys.forEach(key => key.addEventListener("click", calculate));
+
+//----Listen for input from keyboard------
+//standardize keyboard value
+function getKeyboardValue (val) {
+   let standardVal;
+   if (val === "NumpadEnter" || val === "Enter" || val === "Equal") standardVal = "=";
+   else if (val.includes("Digit")) standardVal = val.slice(5,6);
+   else if (val === "NumpadMultiply" || val === "*") standardVal = "x";
+   else if (val === "NumpadAdd" || val === "+") standardVal = "+";
+   else if (val === "NumpadSubtract" || val === "-") standardVal = "-";
+   else if (val === "NumpadDivide" || val === "/") standardVal = "÷";
+   else if (val === "NumpadDecimal" || val === "Period" || val === ".") standardVal = "."; 
+   else if (val.includes("Numpad")) standardVal = val.slice(6,7);
+   else if (val === "%" || val === "Percent") standardVal = "%";
+   else if (val === "Backspace" || val === "Delete") standardVal = "Clear";
+   return standardVal;
+}
+
+window.addEventListener('keydown', calculate);
