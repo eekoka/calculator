@@ -34,12 +34,27 @@ function getValue(idValue) {
     return btn.textContent;
 }
 
+//get and standardize keyboard value
+function getKeyboardValue (val) {
+    let standardVal;
+    if (val === "NumpadEnter" || val === "Enter" || val === "Equal") standardVal = "=";
+    else if (val.includes("Digit")) standardVal = val.slice(5,6);
+    else if (val === "NumpadMultiply" || val === "*") standardVal = "x";
+    else if (val === "NumpadAdd" || val === "+") standardVal = "+";
+    else if (val === "NumpadSubtract" || val === "-") standardVal = "-";
+    else if (val === "NumpadDivide" || val === "/") standardVal = "÷";
+    else if (val === "NumpadDecimal" || val === "Period" || val === ".") standardVal = "."; 
+    else if (val.includes("Numpad")) standardVal = val.slice(6,7);
+    else if (val === "%" || val === "Percent") standardVal = "%";
+    else if (val === "Backspace" || val === "Delete") standardVal = "Clear";
+    return standardVal;
+ }
+
 //display result to dp number of decimal places - default is 10 decimal places
 function displayAnswer (ans, dp=10) {
     if (isNaN(ans)) return ans;
     return Number((ans).toFixed(dp));
  }
-
 
 //get reference to the display
 const upperDisplay = document.querySelector("#sub-display-1");
@@ -50,11 +65,11 @@ upperDisplay.textContent = "0";
 function calculate(e) {
 
     let value;
-    e.preventDefault(); //this prevent the the enter button to fire by default to enter current value rather than just acting as =
+    //this prevent the enter button from submitting the value of the currently active screen button by default 
+    //so that the enter button will just act as =
+    e.preventDefault(); 
     if (e.type === "click") value = getValue(e.target.id);
     else if (e.type === "keydown") value = getKeyboardValue(e.code);
-
-    console.log(value);
 
     //collect values to display on screen
     if (Number.isInteger(parseInt(value)) || value === ".") {
@@ -144,7 +159,6 @@ function calculate(e) {
     if (answer !== undefined) lowerDisplay.textContent = displayAnswer(answer); //max is 10 decimal place
 }
 
-
 let leftSide;
 let rightSide;
 let leftSign = "";//default is no sign which positive
@@ -158,20 +172,4 @@ const keys = document.querySelectorAll(".keypad-unit");
 keys.forEach(key => key.addEventListener("click", calculate));
 
 //----Listen for input from keyboard------
-//standardize keyboard value
-function getKeyboardValue (val) {
-   let standardVal;
-   if (val === "NumpadEnter" || val === "Enter" || val === "Equal") standardVal = "=";
-   else if (val.includes("Digit")) standardVal = val.slice(5,6);
-   else if (val === "NumpadMultiply" || val === "*") standardVal = "x";
-   else if (val === "NumpadAdd" || val === "+") standardVal = "+";
-   else if (val === "NumpadSubtract" || val === "-") standardVal = "-";
-   else if (val === "NumpadDivide" || val === "/") standardVal = "÷";
-   else if (val === "NumpadDecimal" || val === "Period" || val === ".") standardVal = "."; 
-   else if (val.includes("Numpad")) standardVal = val.slice(6,7);
-   else if (val === "%" || val === "Percent") standardVal = "%";
-   else if (val === "Backspace" || val === "Delete") standardVal = "Clear";
-   return standardVal;
-}
-
 window.addEventListener('keydown', calculate);
