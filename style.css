@@ -15,6 +15,15 @@ header {
     background-color: #ac3b61;
     color: whitesmoke;
     padding: 6px;
+    flex-direction: column;
+}
+
+header button {
+    border-color: whitesmoke;
+    color: whitesmoke;
+    border-radius: 8px;
+    border-style: solid;
+    background-color: #ac3b61;
 }
 
 #logo {
@@ -88,3 +97,7 @@ footer {
     color: whitesmoke;
 }
 
+.dark-mode {
+    background-color: black;
+    color: white;
+}

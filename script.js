@@ -173,3 +173,26 @@ keys.forEach(key => key.addEventListener("click", calculate));
 
 //----Listen for input from keyboard------
 window.addEventListener('keydown', calculate);
+
+//---Implement Dark Mode -----
+const darkBtn = document.querySelector('#dark-mode-btn');
+darkBtn.onclick = darkMode;
+
+function darkMode () {
+    const element = document.body;
+    element.classList.toggle("dark-mode");
+
+    const headerElement = document.querySelector('header');
+    headerElement.classList.toggle("dark-mode");
+
+    const footerElement = document.querySelector('footer');
+    footerElement.classList.toggle("dark-mode");
+
+    darkBtn.classList.toggle("dark-mode");
+
+    const keyElements = document.querySelectorAll('.keypad-unit');
+    /*keyElements.forEach((button)=> {
+        button.classList.toggle("button-dark-mode");
+    });*/
+    keyElements.forEach(keyElement => keyElement.classList.toggle("dark-mode"));
+}
